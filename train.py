@@ -35,15 +35,8 @@ epoch_sizes = [2, 4, 4, 8, 8, 16]
 latent_const = torch.from_numpy(np.load('randn.npy')).float().to(device)
 
 
-transform = transforms.Compose([
-    transforms.CenterCrop([178, 178]),
-    transforms.Resize([128, 128]),
-    transforms.RandomHorizontalFlip(0.5),
-    transforms.ToTensor(),
-    transforms.Normalize(mean=(0.5, 0.5, 0.5), std=(0.5, 0.5, 0.5))
-])
-dataset = Dataset('c:/DATASETS/celebA/data.txt',
-                  'c:/DATASETS/celebA/img_align_celeba', transform)
+dataset = Dataset('../DATASETS/DATASETS/LJSpeech-1.1/metadata.csv',
+                  '../DATASETS/DATASETS/LJSpeech-1.1/wavs/')
 
 # logs_idx = len(glob.glob('logs/*'))
 # depth_start = 0
