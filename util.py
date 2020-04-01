@@ -1,11 +1,22 @@
-import torch
-import torch.nn as nn
+import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
 
-def gradient_penalty_R1(x, disc, **kwargs):
-    x = torch.autograd.Variable(x, requires_grad=True)
-    d_output = disc(x, **kwargs)
-    gradients = torch.autograd.grad(d_output, x, grad_outputs=torch.ones_like(d_output).to(x.device),
-                                    create_graph=True)[0]
-    gradients = gradients.flatten(1)
-    gp = 10 * torch.sum(gradients ** 2, 1)
-    return gp
+# plt.switch_backend('agg')
+
+
+def plot_heatmap(input, x_label=None, y_label=None):
+    # Set up figure with colorbar
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    cax = ax.imshow(input.numpy(), interpolation='none')
+    fig.colorbar(cax)
+
+    # Set up axes
+    if x_label is not None:
+        ax.set_xticklabels(x_label, rotation=90)
+        ax.xaxis.set_major_locator(ticker.MultipleLocator(1))
+    if y_label is not None:
+        ax.set_yticklabels(y_label)
+        ax.yaxis.set_major_locator(ticker.MultipleLocator(1))
+
+    return fig
